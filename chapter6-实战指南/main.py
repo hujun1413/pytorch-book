@@ -111,12 +111,17 @@ def train(**kwargs):
         model.save()
 
         # validate and visualize
+        vis.plot('loss', loss_meter.value()[0])
+        val_cm1,train_accuracy = val(model,train_dataloader)
+        vis.plot('train_accuracy',train_accuracy)
+        print(epoch, ' train_accuracy: ', train_accuracy)
         val_cm,val_accuracy = val(model,val_dataloader)
-
         vis.plot('val_accuracy',val_accuracy)
-        vis.log("epoch:{epoch},lr:{lr},loss:{loss},train_cm:{train_cm},val_cm:{val_cm}".format(
-                    epoch = epoch,loss = loss_meter.value()[0],val_cm = str(val_cm.value()),train_cm=str(confusion_matrix.value()),lr=lr))
-        
+        print(epoch, ' val_accuracy: ', val_accuracy)
+        vis.log("epoch:{epoch},lr:{lr},loss:{loss},val_accur:{val_accur},train_cm:{train_cm},val_cm:{val_cm}".format(
+                    epoch = epoch,loss = loss_meter.value()[0],val_cm = str(val_cm.value()),
+                    train_cm=str(confusion_matrix.value()),lr=lr,val_accur=val_accuracy))
+
         # update learning rate
         if loss_meter.value()[0] > previous_loss:          
             lr = lr * opt.lr_decay

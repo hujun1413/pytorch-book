@@ -28,3 +28,6 @@ class Config:
     epoch = 1
 
     test_img = 'img/example.jpeg'
+    model_ckpt = 'caption_0914_1947'
+
+

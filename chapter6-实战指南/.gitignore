@@ -1,0 +1,5 @@
+*~
+checkpoints*
+cifar10*
+.vscode
+*.pyc
